@@ -9,7 +9,7 @@ from datetime import datetime
 from aiohttp import web
 from aiohttp.web import Response, StreamResponse
 from pyrogram.file_id import FileId
-from pyrogram.errors import MessageNotFound
+from pyrogram.errors import MessageIdInvalid
 
 from config import Config
 from database import FileStats, update_file_stats
@@ -533,7 +533,7 @@ class WebServer:
                 
             return response
             
-        except MessageNotFound:
+        except MessageIdInvalid:
             return web.Response(text="File not found", status=404)
         except Exception as e:
             self.logger.error(f"File serving error: {e}", exc_info=True)
